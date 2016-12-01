@@ -14,8 +14,15 @@ from sympy.utilities.misc import filldedent, translate
 from sympy.utilities.iterables import uniq
 from sympy.utilities.randtest import _randrange
 
-def hash_chain_encrypt(msg, key):
+#Hash the given message n(hash_layer) times.
+def hash_chain_encrypt(msg, hash_layer):
 	print ("")
 
-def hash_chain_decrypt(msg, key):
+#decrypt the given message according to its layer depth.
+def hash_chain_decrypt(msg_list, hash_layer):
 	print ("")
+
+#There must not be collisions and the table has to be flexible.
+#Hash table will have l lines and every line containing n length LinkedList.
+def hash_table_handler(msg, hash_layer, addOrDel):
+    print("add/remove from hash table")
