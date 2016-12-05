@@ -15,6 +15,13 @@ from sympy.utilities.iterables import uniq
 from sympy.utilities.randtest import _randrange
 import hashlib
 
+#The ideal cryptographic hash function has four main properties:
+#1. it is easy to compute the hash value for any given message
+#2. it is infeasible to generate a message that has a given hash
+#3. it is infeasible to modify a message without changing the hash
+#4. it is infeasible to find two different messages with the same hash.
+#Because of the reasons above, there is no conversion from hashed string to the original one.
+
 #multiply incoming msg with an prime number which is 982,451,653
 def hash_function(msg):
     return hashlib.md5(msg).hexdigest()
