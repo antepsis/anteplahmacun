@@ -13,12 +13,17 @@ from sympy.polys.polytools import gcd, Poly
 from sympy.utilities.misc import filldedent, translate
 from sympy.utilities.iterables import uniq
 from sympy.utilities.randtest import _randrange
+import hashlib
+
+#multiply incoming msg with an prime number which is 982,451,653
+def hash_function(msg):
+    return hashlib.md5(msg).hexdigest()
 
 #Hash the given message n(hash_layer) times.
 def hash_chain_encrypt(msg, hash_layer):
 	print ("")
 
-#decrypt the given message according to its layer depth.
+#Decrypt the given message according to its layer depth.
 def hash_chain_decrypt(msg_list, hash_layer):
 	print ("")
 
@@ -26,3 +31,10 @@ def hash_chain_decrypt(msg_list, hash_layer):
 #Hash table will have l lines and every line containing n length LinkedList.
 def hash_table_handler(msg, hash_layer, addOrDel):
     print("add/remove from hash table")
+
+
+if __name__ == "__main__":
+    msg = "dogac"
+    hashed = hashlib.md5(msg).hexdigest()
+    hashed2 = hash_function(hashed)
+    print (hashed2)
