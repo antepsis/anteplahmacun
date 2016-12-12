@@ -1,22 +1,27 @@
 import hashlib
+from random import randint
+
 class ItemInfo:
     key = 0
     data = ""
+    layer = 0
  
-    def __init__(self,key,data):
+    def __init__(self,key,data,layer):
         self.key = key
         self.data = data
+        self.layer = layer
  
     def toString(self):
-        print("  '" + self.key + "' / " + str(self.value) )
+        print('Key: {}, Value: {}, Hash Layer: {}'.format(self.key, str(self.data), self.layer) )
 
 class ChainedHashTable:
     def __init__(self, capacity=128):
         self.capacity = capacity
         self.size = 0
-        self.itemList = [0]*self.capacity
         self.table = [0]*self.capacity
-
+        self.itemList = []
+        for i in range(self.capacity):
+            self.itemList.append(ItemInfo(0,"",0))
     def getSize(self):
         print ('You are using {} size of {} capacity'.format(self.size, self.capacity))
 
@@ -25,8 +30,10 @@ class ChainedHashTable:
 
     def wipeTable(self):
         self.table = [0]*self.capacity
-        self.itemList = [0]*self.capacity
+        self.itemList = []
         self.size = 0
+        for i in range(self.capacity):
+            self.itemList.append(ItemInfo(0,"",0))
 
     def getHash(self,obj):
         return hashlib.md5(obj).hexdigest()
@@ -39,14 +46,12 @@ class ChainedHashTable:
         hashes = []
         hash0 = self.getHash(item)
         hashes.append(hash0)
+        
         for i in range(n-1):
             hashes.append(self.getHash(hashes[i]))
-       # print hashes
-       # print len(hashes)
         key = self.getKey(hashes[len(hashes)-1]) # map according to the last hashed value.
-        item = ItemInfo(key, item)
-       # print ('key: {}'.format(key))
-        #self.addUpdateToTable(hashes, key)
+        item = ItemInfo(key, item, n)
+        
         if(self.table[key] != 0):
             self.table[key] = hashes
             self.itemList[key] = item
@@ -54,13 +59,29 @@ class ChainedHashTable:
             self.table[key] = hashes
             self.itemList[key] = item
             self.size += 1
-        print self.table 
 
-    def find(self, item):
-        print ('found value')
+    #returns found item's index and hashed layer number
+    def search(self, item):
+        for i in range(self.capacity):
+            if(long(self.getHash(self.itemList[i].data), 16) == long(self.getHash(item), 16)):
+                return [True, i, self.itemList[i].layer]
+        return [False, -1, -1]
     
-    def randomizeMsg(self):
+    def searchHash(self, hashedItem):
         print ('')
+
+    def control(self, givenItem, foundItem):
+        print ('')
+
+    def randomize(self, item):
+        result = self.search(item)
+       
+       if(result[0] == True):
+            index = result[1]
+            return self.table[index][randint(0, int(result[2]))]
+        else:
+            return -1
+            
     #def migrate
 
 if __name__ == "__main__":
@@ -71,4 +92,7 @@ if __name__ == "__main__":
     #table.getSize()
     #print (table.table)
     table.addChain('dogaco', 5)
+    table.addChain('heyho', 10)
+    print (table.randomize('heyho'))
+    print (table.search('dogac'))
 #    print long((table.getHash('dogac')), 16) % 32
