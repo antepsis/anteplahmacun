@@ -1,40 +1,41 @@
+import hashlib
+
 class ChainedHashTable:
     def __init__(self, capacity=128):
-        self.capacity = capacity;
-        self.size = 0;
-        self.keys = []
-        self.data = [[] for _ in range(self.capacity)]
+        self.capacity = capacity
+        self.size = 0
+        self.data = [0]*self.capacity
 
+    def getSize(self):
+        print ('You are using {} size of {} capacity'.format(self.size, self.capacity))
 
-    def __str__(self):
-        table_status = ""
-        for cells in self.data:
-            table_status += str(cells)
-        return table_status
-
-
-    def __len__(self):
-        length = 0
-        for i in self.data:
-            length += len(i)
-        return length
-
-
+    def getString(self):
+        print ('Hash table to the string: ')
     def getHash(self,obj):
         return sum([ord(c) for c in obj]) * 805306457
 
+    def getKey(self, hashed_value):
+        return hashed_value % self.capacity
 
     def addUpdate(self,item):
         hashed = self.getHash(item)
-        for i in enumerate(self.data[hashed%self.capacity]):
-            if self.data[i%self.capacity] == self.data[hashed%self.capacity]:
-                print "Insert ERROR. This object already exists in the table."
-            else:
-                self.data.append(obj)
-
+        key = self.getKey(hashed)
+        
+        if(self.size == 0):
+            self.data[key] = hashed
+            self.size += 1
+        else:
+            for i in range(self.capacity):
+                if(self.data[i] == hashed):
+                    self.data[key] = hashed #if the table includes the same item, override it.
+                else:
+                    self.data[key] = hashed
+            self.size += 1
 
 if __name__ == "__main__":
-    table = ChainedHashTable(64)
-    table.addUpdate('52')
-    print table
-                
+    table = ChainedHashTable(32)
+    #table.addUpdate('52')
+    table.addUpdate('sarp')
+    table.addUpdate('dogac')
+    table.getSize()
+    print (table.data)
