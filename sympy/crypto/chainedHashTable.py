@@ -1,5 +1,3 @@
-import hashlib
-
 class ChainedHashTable:
     def __init__(self, capacity=128):
         self.capacity = capacity
@@ -11,8 +9,9 @@ class ChainedHashTable:
 
     def getString(self):
         print ('Hash table to the string: ')
+
     def getHash(self,obj):
-        return sum([ord(c) for c in obj]) * 805306457
+        return str(sum([ord(c) for c in obj]) * 805306457)
 
     def getKey(self, hashed_value):
         return hashed_value % self.capacity
@@ -31,11 +30,20 @@ class ChainedHashTable:
                 else:
                     self.data[key] = hashed
             self.size += 1
+    
+    def addUpdateChain(self, item, n=10):
+        hashes = []
+        hash0 = self.getHash(item)
+        hashes.append(hash0)
+        for i in range(n-1):
+            hashes.append(self.getHash(hashes[i]))
+        print hashes
 
 if __name__ == "__main__":
     table = ChainedHashTable(32)
     #table.addUpdate('52')
-    table.addUpdate('sarp')
-    table.addUpdate('dogac')
-    table.getSize()
-    print (table.data)
+    #table.addUpdate('sarp')
+    #table.addUpdate('dogac')
+    #table.getSize()
+    #print (table.data)
+    table.addUpdateChain('dogac', 5)
