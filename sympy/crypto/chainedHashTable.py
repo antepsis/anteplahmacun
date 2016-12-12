@@ -1,49 +1,66 @@
+import hashlib
+class ItemInfo:
+    key = 0
+    data = ""
+ 
+    def __init__(self,key,data):
+        self.key = key
+        self.data = data
+ 
+    def toString(self):
+        print("  '" + self.key + "' / " + str(self.value) )
+
 class ChainedHashTable:
     def __init__(self, capacity=128):
         self.capacity = capacity
         self.size = 0
-        self.data = [0]*self.capacity
+        self.itemList = [0]*self.capacity
+        self.table = [0]*self.capacity
 
     def getSize(self):
         print ('You are using {} size of {} capacity'.format(self.size, self.capacity))
 
-    def getString(self):
-        print ('Hash table to the string: ')
+    def getTable(self):
+        print self.table
+
+    def wipeTable(self):
+        self.table = [0]*self.capacity
+        self.itemList = [0]*self.capacity
+        self.size = 0
 
     def getHash(self,obj):
-        return str(sum([ord(c) for c in obj]) * 805306457)
+        return hashlib.md5(obj).hexdigest()
 
     def getKey(self, hashed_value):
-        return long(hashed_value) % self.capacity
+        return long(hashed_value, 16) % self.capacity
 
-    def addUpdateToTable(self,item, key):
-        hashed = self.getHash(item)
-        #key = self.getKey(hashed)
-        
-        if(self.size == 0):
-            self.data[key] = hashed
-            self.size += 1
-        else:
-            for i in range(self.capacity):
-                if(self.data[i] == hashed):
-                    self.data[key] = hashed #if the table includes the same item, override it.
-                else:
-                    self.data[key] = hashed
-            self.size += 1
-    #create a chain    
+    #Create an n layer hash chain and insert into the table(data)     
     def addChain(self, item, n=10):
         hashes = []
         hash0 = self.getHash(item)
         hashes.append(hash0)
         for i in range(n-1):
             hashes.append(self.getHash(hashes[i]))
-        print hashes
-        print len(hashes)
-        key = self.getKey(hashes[len(hashes)-1])
-        print ('key: {}'.format(key))
-        self.addUpdateToTable(hashes, key)
+       # print hashes
+       # print len(hashes)
+        key = self.getKey(hashes[len(hashes)-1]) # map according to the last hashed value.
+        item = ItemInfo(key, item)
+       # print ('key: {}'.format(key))
+        #self.addUpdateToTable(hashes, key)
+        if(self.table[key] != 0):
+            self.table[key] = hashes
+            self.itemList[key] = item
+        else:
+            self.table[key] = hashes
+            self.itemList[key] = item
+            self.size += 1
+        print self.table 
 
-
+    def find(self, item):
+        print ('found value')
+    
+    def randomizeMsg(self):
+        print ('')
     #def migrate
 
 if __name__ == "__main__":
@@ -52,5 +69,6 @@ if __name__ == "__main__":
     #table.addUpdate('sarp')
     #table.addUpdate('dogac')
     #table.getSize()
-    #print (table.data)
-    table.addChain('dogac', 5)
+    #print (table.table)
+    table.addChain('dogaco', 5)
+#    print long((table.getHash('dogac')), 16) % 32
