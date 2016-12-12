@@ -14,11 +14,11 @@ class ChainedHashTable:
         return str(sum([ord(c) for c in obj]) * 805306457)
 
     def getKey(self, hashed_value):
-        return hashed_value % self.capacity
+        return long(hashed_value) % self.capacity
 
-    def addUpdate(self,item):
+    def addUpdateToTable(self,item, key):
         hashed = self.getHash(item)
-        key = self.getKey(hashed)
+        #key = self.getKey(hashed)
         
         if(self.size == 0):
             self.data[key] = hashed
@@ -30,14 +30,21 @@ class ChainedHashTable:
                 else:
                     self.data[key] = hashed
             self.size += 1
-    
-    def addUpdateChain(self, item, n=10):
+    #create a chain    
+    def addChain(self, item, n=10):
         hashes = []
         hash0 = self.getHash(item)
         hashes.append(hash0)
         for i in range(n-1):
             hashes.append(self.getHash(hashes[i]))
         print hashes
+        print len(hashes)
+        key = self.getKey(hashes[len(hashes)-1])
+        print ('key: {}'.format(key))
+        self.addUpdateToTable(hashes, key)
+
+
+    #def migrate
 
 if __name__ == "__main__":
     table = ChainedHashTable(32)
@@ -46,4 +53,4 @@ if __name__ == "__main__":
     #table.addUpdate('dogac')
     #table.getSize()
     #print (table.data)
-    table.addUpdateChain('dogac', 5)
+    table.addChain('dogac', 5)
