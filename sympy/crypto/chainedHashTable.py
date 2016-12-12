@@ -20,23 +20,21 @@ class ChainedHashTable:
         return length
 
 
-    def hash_it(obj, tablesize):  # gotta take mod through table size
+    def getHash(self,obj):
         return sum([ord(c) for c in obj]) * 805306457
 
 
-    def addUpdate(self, obj):
-        hashed = self.hash_it(obj, self.capacity)
+    def addUpdate(self,item):
+        hashed = self.getHash(item)
         for i in enumerate(self.data[hashed%self.capacity]):
             if self.data[i%self.capacity] == self.data[hashed%self.capacity]:
                 print "Insert ERROR. This object already exists in the table."
             else:
                 self.data.append(obj)
 
-    def remove(self, key):
 
 if __name__ == "__main__":
     table = ChainedHashTable(64)
+    table.addUpdate('52')
+    print table
                 
-
-
-    
