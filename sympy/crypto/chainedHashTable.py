@@ -25,8 +25,10 @@ class ChainedHashTable:
     def getSize(self):
         print ('You are using {} size of {} capacity'.format(self.size, self.capacity))
 
-    def getTable(self):
-        print self.table
+    def printTable(self):
+        for i in range(self.capacity):
+            if(self.table[i] != 0):
+                print('Index: {} -> {}\n'.format(i, self.table[i]))
 
     def wipeTable(self):
         self.table = [0]*self.capacity
@@ -69,19 +71,23 @@ class ChainedHashTable:
     
     def searchHash(self, hashedItem):
         print ('')
-
+    #true, hash index
     def control(self, givenItem, foundItem):
         print ('')
-
+    #add and randomize?
     def randomize(self, item):
         result = self.search(item)
        
-       if(result[0] == True):
+        if(result[0] == True):
             index = result[1]
             return self.table[index][randint(0, int(result[2]))]
         else:
             return -1
-            
+    def fetchIndex(self, index):
+        if((int(index) < self.capacity) and (int(index) >= 0)):
+            return self.table[int(index)]
+        return -1
+
     #def migrate
 
 if __name__ == "__main__":
@@ -93,6 +99,7 @@ if __name__ == "__main__":
     #print (table.table)
     table.addChain('dogaco', 5)
     table.addChain('heyho', 10)
+    table.printTable()
     print (table.randomize('heyho'))
     print (table.search('dogac'))
 #    print long((table.getHash('dogac')), 16) % 32
