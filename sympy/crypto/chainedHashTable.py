@@ -69,11 +69,6 @@ class ChainedHashTable:
                 return [True, i, self.itemList[i].layer]
         return [False, -1, -1]
     
-    def searchHash(self, hashedItem):
-        print ('')
-    #true, hash index
-    def control(self, givenItem, foundItem):
-        print ('')
     #add and randomize?
     def randomize(self, item):
         result = self.search(item)
@@ -83,23 +78,7 @@ class ChainedHashTable:
             return self.table[index][randint(0, int(result[2]))]
         else:
             return -1
-    def fetchIndex(self, index):
+    def fetchAtLine(self, index):
         if((int(index) < self.capacity) and (int(index) >= 0)):
             return self.table[int(index)]
         return -1
-
-    #def migrate
-
-if __name__ == "__main__":
-    table = ChainedHashTable(32)
-    #table.addUpdate('52')
-    #table.addUpdate('sarp')
-    #table.addUpdate('dogac')
-    #table.getSize()
-    #print (table.table)
-    table.addChain('dogaco', 5)
-    table.addChain('heyho', 10)
-    table.printTable()
-    print (table.randomize('heyho'))
-    print (table.search('dogac'))
-#    print long((table.getHash('dogac')), 16) % 32
