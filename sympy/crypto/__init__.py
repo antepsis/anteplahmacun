@@ -1,3 +1,5 @@
+import hashlib
+import random
 from sympy.crypto.crypto import (cycle_list,
         encipher_shift, encipher_affine, encipher_substitution,
         check_and_join, encipher_vigenere, decipher_vigenere, bifid5_square,
@@ -11,3 +13,5 @@ from sympy.crypto.crypto import (cycle_list,
         encipher_elgamal, dh_private_key, dh_public_key, dh_shared_key,
         padded_key, encipher_bifid, decipher_bifid, bifid_square, bifid5,
         bifid6, bifid10)
+
+from sympy.crypto.chainedHashTable import ChainedHashTable
