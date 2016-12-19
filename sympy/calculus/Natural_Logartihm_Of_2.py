@@ -1,5 +1,4 @@
 from sympy import *
-from sympy import I
 
 def Mercator_Series(x):
 
@@ -27,8 +26,8 @@ def Mercator_Series(x):
 
     
 
-##    if(x == None): # This progress not complete
-##        print("geldi")
+    if(x == None): # This progress not complete
+        print("geldi")
     if(x<=1 and x>-1):
         
         k = Symbol("k")
@@ -40,16 +39,16 @@ def Mercator_Series(x):
     elif(x>1 or x<=-1):
         raise ValueError("x have to be (-1< x <= 1)")
 
-##    else: # This progress not complete
-##        print("geldi")
-##        k = Symbol("k")
-##        x = Symbol("x")
-##        function = ((-1)**(k+1))*(x**k)/k
-##        m = Sum(function ,(k,1,oo)).doit().evalf()
+    else: # This progress not complete
+        print("geldi")
+        k = Symbol("k")
+        x = Symbol("x")
+        function = ((-1)**(k+1))*(x**k)/k
+        m = Sum(function ,(k,1,oo)).doit().evalf()
 
         return m
 
-print(Mercator_Series(1))
+print(Mercator_Series(0.5))
 
 def BBP_type_Natural_logarithm_of_2():
 
@@ -70,11 +69,6 @@ def BBP_type_Natural_logarithm_of_2():
 ## ⎜⎪        k = 1                               ⎟
 ## ⎝⎩                                            ⎠
 ##
-
-
-
-
-
     
 
     k = Symbol("k")
@@ -88,16 +82,55 @@ print(BBP_type_Natural_logarithm_of_2())
 
 
 
-##def Lerch_Transcendent_For_Natural_Logarithm_Of_2():  # This progress not complete
-##
-##    k = Symbol("k")
-##    function1 = ((-1)**k)*((1/(3*k+1))-(1/(3*k+2))+(1/(3*k+3)))
-##    function2 = ((-1)**k)*((1/(5*k+1))-(1/(5*k+2))+(1/(5*k+3))-(1/(5*k+4))+(1/(5*k+5)))
-##    lerch = Sum(function2,(k,0,oo)).doit().evalf()
-##    
-##    return pretty(lerch)
-##
-##print(Lerch_Transcendent_For_Natural_Logarithm_Of_2())
+def Simple_Series_For_Natural_Logarithm_Of_2(x):
+
+## You can choose you series for calculating ln(2)
+
+
+    k = Symbol("k")
+
+    if(x==1):
+        
+    ## ⎛⎧                                            ⎞
+    ## ⎜⎪          ∞                                 ⎟
+    ## ⎜⎪         ____                               ⎟
+    ## ⎜⎪         ╲                                  ⎟
+    ## ⎜⎪          ╲                                 ⎟
+    ##-⎜⎨           ╲      k⎛  1       1       1   ⎞ ⎟
+    ## ⎜⎪ln(2) =    ╱  (-1) ⎜───── - ───── + ───── ⎟ ⎟
+    ## ⎜⎪          ╱        ⎜ 3k+1    3k+2    3k+3 ⎟ ⎟
+    ## ⎜⎪         ╱         ⎝                      ⎠ ⎟
+    ## ⎜⎪         ‾‾‾‾                               ⎟
+    ## ⎜⎪        k = 1                               ⎟
+    ## ⎝⎩                                            ⎠
+        
+        function = ((-1)**k)*((1/(3*k+1))-(1/(3*k+2))+(1/(3*k+3)))
+        
+    elif(x==2):
+
+    ## ⎛⎧                                                            ⎞
+    ## ⎜⎪          ∞                                                 ⎟
+    ## ⎜⎪         ____                                               ⎟
+    ## ⎜⎪         ╲                                                  ⎟
+    ## ⎜⎪          ╲                                                 ⎟
+    ##-⎜⎨           ╲      k⎛  1       1       1       1       1   ⎞ ⎟
+    ## ⎜⎪ln(2) =    ╱  (-1) ⎜───── - ───── + ───── - ───── + ───── ⎟ ⎟
+    ## ⎜⎪          ╱        ⎜ 5k+1    5k+2    5k+3    5k+4    5k+5 ⎟ ⎟
+    ## ⎜⎪         ╱         ⎝                                      ⎠ ⎟
+    ## ⎜⎪         ‾‾‾‾                                               ⎟
+    ## ⎜⎪        k = 1                                               ⎟
+    ## ⎝⎩                                                            ⎠
+        
+        function = ((-1)**k)*((1/(5*k+1))-(1/(5*k+2))+(1/(5*k+3))-(1/(5*k+4))+(1/(5*k+5)))
+        
+    l = Sum(function,(k,0,oo)).doit().evalf()
+    y = str(l)
+    y = y[0:17]
+    l = float(y)
+    return l
+
+print(Simple_Series_For_Natural_Logarithm_Of_2(2))
+
 ##
 ##def inverse_cosecant_Mercator(x):
 ##    x = Symbol("x")
@@ -108,12 +141,5 @@ print(BBP_type_Natural_logarithm_of_2())
 ##
 ##a = I**2
 ##print(a)
-x = Symbol("x")
-k = Symbol("k")
-function = ((-1)**(k+1))*(x**k)/k
-m = Sum(function ,(k,1,oo)).doit().evalf()
-
-print(pretty(m))
-
 
     
