@@ -1,6 +1,25 @@
 import hashlib
 from random import randint
 
+"""Chaned Hash Table includes a hash table. Apart from usual hash table,
+chained hash table hashes N times as you add a value into the table.
+This data type is widely used to create 2-Step Authenticators.
+
+ Examples
+ ========
+
+>>> from sympy.crypto.crypto import ChainedHashTable
+>>> table = ChainedHashTable(64)
+>>> table.addChain('HELLOWORLD', 5)
+>>> table.addChain('HELLO', 7)
+>>> table.addChain('WORLD', 11)
+>>> table.printTable()
+
+Printing the table
+========
+>>> table.printTable()
+"""
+
 class ItemInfo:
     key = 0
     data = ""
@@ -22,6 +41,8 @@ class ChainedHashTable:
         self.itemList = []
         for i in range(self.capacity):
             self.itemList.append(ItemInfo(0,"",0))
+    
+    #Returns size used.
     def getSize(self):
         print ('You are using {} size of {} capacity'.format(self.size, self.capacity))
 
@@ -29,17 +50,20 @@ class ChainedHashTable:
         for i in range(self.capacity):
             if(self.table[i] != 0):
                 print('Index: {} -> {}\n'.format(i, self.table[i]))
-
+    
+    #Wipes the table and fills it with ZEROs as its initialized value.
     def wipeTable(self):
         self.table = [0]*self.capacity
         self.itemList = []
         self.size = 0
         for i in range(self.capacity):
             self.itemList.append(ItemInfo(0,"",0))
-
+    
+    #Hashes the given value in hexadecimal.
     def getHash(self,obj):
         return hashlib.md5(obj).hexdigest()
 
+    #Calculates where the given hash value maps
     def getKey(self, hashed_value):
         return long(hashed_value, 16) % self.capacity
 
@@ -62,13 +86,14 @@ class ChainedHashTable:
             self.itemList[key] = item
             self.size += 1
 
-    #returns found item's index and hashed layer number
+    #Returns found item's index and hashed layer number
     def search(self, item):
         for i in range(self.capacity):
             if(long(self.getHash(self.itemList[i].data), 16) == long(self.getHash(item), 16)):
                 return [True, i, self.itemList[i].layer]
         return [False, -1, -1]
-    #returns found hash value's index and hashed layer
+
+    #Returns found hash value's index and hashed layer
     def searchHash(self, hashed_value):
         for i in range(self.capacity):
             if(self.table[i] != 0):
@@ -77,7 +102,8 @@ class ChainedHashTable:
                         return [True, i ,j]
 
         return [False, -1]
-
+    
+    #Returns item's random hash value from its layers
     def randomize(self, item):
         result = self.search(item)
        
@@ -86,6 +112,8 @@ class ChainedHashTable:
             return self.table[index][randint(0, int(result[2]))]
         else:
             return -1
+
+    #Fetches the data at given line number
     def fetchAtLine(self, index):
         if((int(index) < self.capacity) and (int(index) >= 0)):
             return self.table[int(index)]
@@ -94,7 +122,7 @@ class ChainedHashTable:
     #Controls whether the fetched data is correct
     def controlData(self, taken_hash):
         result = self.searchHash(taken_hash)
-        print('Result: {} \n'.format(result) )
+        
         if(result[0] == False):
             return False
         else:
