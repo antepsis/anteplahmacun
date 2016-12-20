@@ -68,8 +68,16 @@ class ChainedHashTable:
             if(long(self.getHash(self.itemList[i].data), 16) == long(self.getHash(item), 16)):
                 return [True, i, self.itemList[i].layer]
         return [False, -1, -1]
-    
-    #add and randomize?
+    #returns found hash value's index and hashed layer
+    def searchHash(self, hashed_value):
+        for i in range(self.capacity):
+            if(self.table[i] != 0):
+                for j in range(len(self.table[i])):
+                    if(self.table[i][j] == hashed_value):
+                        return [True, i ,j]
+
+        return [False, -1]
+
     def randomize(self, item):
         result = self.search(item)
        
@@ -82,3 +90,25 @@ class ChainedHashTable:
         if((int(index) < self.capacity) and (int(index) >= 0)):
             return self.table[int(index)]
         return -1
+    
+    #Controls whether the fetched data is correct
+    def controlData(self, taken_hash):
+        result = self.searchHash(taken_hash)
+        print('Result: {} \n'.format(result) )
+        if(result[0] == False):
+            return False
+        else:
+            currentLayer = result[2]
+            currentIndexOnTable = result[1]
+            rangeAtIndex = len(self.fetchAtLine(currentIndexOnTable)) - int(currentLayer)
+
+            hashes = []
+            valueToHash = self.fetchAtLine(currentIndexOnTable)[currentLayer]
+            hashes.append(valueToHash)
+            for i in range(rangeAtIndex-1):
+                hashes.append(self.getHash(hashes[i]))
+            
+            for k in range(len(hashes)):
+                if(self.table[currentIndexOnTable][k+2] != hashes[k]):
+                    return False
+            return True
