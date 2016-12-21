@@ -90,23 +90,9 @@ def test_controlData():
     hashedValue1 = hashlib.md5('notexist').hexdigest()
     hashes = []
     hashes.append(hashedValue0)
-    table.printTable()
+
     for i in range(50):
         hashes.append(hashlib.md5(hashes[i]).hexdigest())
-    print (hashes[4])
-    print table.searchHash(hashes[4])
     assert table.controlData(table.randomize('test1')) == True
     assert table.controlData(hashes[45]) == True
     assert table.controlData(hashedValue1) == False
-
-if __name__ == "__main__":
-    test_getSize()
-    test_wipeTable()
-    test_getHash()
-    test_getKey()
-    test_addChain()
-    test_search()
-    test_searchHash()
-    test_randomize()
-    test_fetchAtLine()
-    test_controlData()
