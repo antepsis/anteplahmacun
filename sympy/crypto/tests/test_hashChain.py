@@ -44,6 +44,11 @@ def test_getKey():
 
 def test_addChain():
     table = ChainedHashTable(16)
+    table.addChain('test', 7)
+    table.addChain(66, 5)
+    table.addChain('', 10)
+
+    assert table.getSize() == 3
 
 
 def test_search():

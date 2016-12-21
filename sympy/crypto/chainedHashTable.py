@@ -62,7 +62,7 @@ class ChainedHashTable:
     
     #Hashes the given value in hexadecimal.
     def getHash(self,obj):
-        return hashlib.md5(obj).hexdigest()
+        return hashlib.md5(str(obj)).hexdigest()
 
     #Calculates where the given hash value maps
     def getKey(self, hashed_value):
@@ -71,7 +71,7 @@ class ChainedHashTable:
     #Create an n layer hash chain and insert into the table(data)     
     def addChain(self, item, n=10):
         hashes = []
-        hash0 = self.getHash(item)
+        hash0 = self.getHash(str(item))
         hashes.append(hash0)
         
         for i in range(n-1):
@@ -110,11 +110,12 @@ class ChainedHashTable:
             return -1
 
         result = self.search(item)
-       
         if(result[0] == True):
             index = result[1]
-            if(self.table[index] is list):
-                return self.table[index][randint(0, int(result[2]))]
+            hashedLayer = result[2]
+            
+            if(self.table[index] != 0):
+                return self.table[index][randint(0, hashedLayer-1)]
         else:
             return -1
 
@@ -134,14 +135,14 @@ class ChainedHashTable:
             currentLayer = result[2]
             currentIndexOnTable = result[1]
             rangeAtIndex = len(self.fetchAtLine(currentIndexOnTable)) - int(currentLayer)
-
             hashes = []
-            valueToHash = self.fetchAtLine(currentIndexOnTable)[currentLayer]
+            valueToHash = self.fetchAtLine(currentIndexOnTable)[0]
             hashes.append(valueToHash)
+
             for i in range(rangeAtIndex-1):
                 hashes.append(self.getHash(hashes[i]))
             
             for k in range(len(hashes)):
-                if(self.table[currentIndexOnTable][k+2] != hashes[k]):
+                if(self.table[currentIndexOnTable][k] != hashes[k]):
                     return False
             return True
