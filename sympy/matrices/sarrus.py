@@ -46,7 +46,7 @@ CALCULATING INVERSE MATRIX USING SARRUS DETERMINANT
 """
 
 
-class Sarrus:
+class sarrus:
 
  #call calc_sarrus_det(m)
 	def calc_sarrus_det(self,matrix):
@@ -85,7 +85,7 @@ class Sarrus:
 	      print("Can not calculate determinant with Sarrus Theorem(Matrix must be 2x2 or 3x3)")
 
     #call  calc_reverse_matrix(m)
-	def calc_reverse_matrix(matrix):
+	def calc_reverse_matrix(self,matrix):
 
 	    determinant = calc_sarrus_det(matrix)
 
