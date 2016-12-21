@@ -1,6 +1,7 @@
 from numbers import Number
 from decimal import Decimal
 from fractions import Fraction
+import copy
 
 def calc_sarrus_det(matrix):
 #checking for size property is suitable for Sarrus Theorem
@@ -26,7 +27,7 @@ def calc_reverse_matrix(matrix):
    determinant = calc_sarrus_det(matrix)
    print(determinant)
    printMatrix(matrix)
-   reverseMatrix = matrix
+   reverseMatrix = copy.deepcopy(matrix)
    sizeR = len(reverseMatrix)
    if(sizeR == 3):
       reverseMatrix[0][0] = ((matrix[1][1]*matrix[2][2])-(matrix[1][2]*matrix[2][1]))/determinant
@@ -36,10 +37,10 @@ def calc_reverse_matrix(matrix):
       reverseMatrix[0][2] = ((matrix[0][1]*matrix[1][2])-(matrix[1][1]*matrix[0][2]))/determinant
 
       reverseMatrix[1][0] = ((matrix[1][2]*matrix[2][0])-(matrix[1][0]*matrix[2][2]))/determinant
-
-      reverseMatrix[1][1] = ((matrix[0][0]*matrix[2][2])-(matrix[2][0]*matrix[2][2]))/determinant
-
-      reverseMatrix[1][2] = ((matrix[0][0]*matrix[2][2])-(matrix[1][2]*matrix[2][1]))/determinant
+     
+      reverseMatrix[1][1] = ((matrix[0][0]*matrix[2][2])-(matrix[2][0]*matrix[0][2]))/determinant
+     
+      reverseMatrix[1][2] = ((matrix[0][2]*matrix[1][0])-(matrix[0][0]*matrix[1][2]))/determinant
 
       reverseMatrix[2][0] = ((matrix[1][0]*matrix[2][1])-(matrix[1][1]*matrix[2][0]))/determinant
 
@@ -59,7 +60,7 @@ def printMatrix(matrix):
     
 
 m =[[2,1,0],[0,2,0],[2,0,1]]
-
+#m=[[1,2,3],[0,1,4],[5,6,0]]
 x = calc_reverse_matrix(m)
 printMatrix(x)
 
