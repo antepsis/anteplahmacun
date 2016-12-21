@@ -1,7 +1,27 @@
 class combinations:
 
-	def combination_norep(n, r):
+	# Calculates Combinations without repetition
+	def combination_norep(self, n, r):
 		top = 1
+		test_n = n
+
+		# Checks if n is an integer
+		try:
+			test_n += 1
+		except TypeError:
+			print "n not an integer"
+			return False
+		
+		test_r = r
+
+
+		# Checks if r is an integer 
+		try:
+			test_r += 1
+		except TypeError:
+			print "r not an integer"
+			return False
+		
 		
 		for i in range(1, n+1):
 			top = i*top
@@ -12,6 +32,7 @@ class combinations:
 		bottom2 = 1
 		dif = n - r
 		
+
 		for j in range (1, r+1):
 			bottom1 = j*bottom1
 
@@ -27,9 +48,31 @@ class combinations:
 
 
 
-	def combination_withrep(n, r):
+	# Calculates Combinations with repetition
+	def combination_withrep(self, n, r):
 		toplimit = r + n - 1
 		top = 1
+		test_n = n
+
+
+
+		# Checks if n is an integer
+		try:
+			test_n += 1
+		except TypeError:
+			print "n not an integer"
+			return False
+		
+		test_r = r
+
+
+
+		# Checks if r is an integer
+		try:
+			test_r += 1
+		except TypeError:
+			print "r not an integer \nPlease Enter a valid integer"
+			return False
 
 		for i in range(1 , toplimit+1):
 			top = i*top
@@ -53,5 +96,5 @@ class combinations:
 
 
 
-	combination_withrep(6, 3)
-	combination_norep(6, 3)
+	#combination_withrep(5, 3)
+	#combination_norep(5, 3)
