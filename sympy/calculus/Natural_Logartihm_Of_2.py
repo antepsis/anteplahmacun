@@ -20,14 +20,8 @@ def Mercator_Series(x):
 ## ⎜⎪ ‾‾‾‾                               ⎟
 ## ⎜⎪k = 1                               ⎟
 ## ⎝⎩                                    ⎠
-##
 
 
-
-    
-
-    if(x == None): # This progress not complete
-        print("geldi")
     if(x<=1 and x>-1):
         
         k = Symbol("k")
@@ -39,16 +33,8 @@ def Mercator_Series(x):
     elif(x>1 or x<=-1):
         raise ValueError("x have to be (-1< x <= 1)")
 
-    else: # This progress not complete
-        print("geldi")
-        k = Symbol("k")
-        x = Symbol("x")
-        function = ((-1)**(k+1))*(x**k)/k
-        m = Sum(function ,(k,1,oo)).doit().evalf()
-
         return m
 
-print(Mercator_Series(0.5))
 
 def BBP_type_Natural_logarithm_of_2():
 
@@ -77,10 +63,6 @@ def BBP_type_Natural_logarithm_of_2():
     
     return bbp
 
-print(BBP_type_Natural_logarithm_of_2())
-
-
-
 
 def Simple_Series_For_Natural_Logarithm_Of_2(x):
 
@@ -101,12 +83,12 @@ def Simple_Series_For_Natural_Logarithm_Of_2(x):
     ## ⎜⎪          ╱        ⎜ 3k+1    3k+2    3k+3 ⎟ ⎟
     ## ⎜⎪         ╱         ⎝                      ⎠ ⎟
     ## ⎜⎪         ‾‾‾‾                               ⎟
-    ## ⎜⎪        k = 1                               ⎟
+    ## ⎜⎪        k = 0                               ⎟
     ## ⎝⎩                                            ⎠
         
         function = ((-1)**k)*((1/(3*k+1))-(1/(3*k+2))+(1/(3*k+3)))
         
-    elif(x==2):
+    else:
 
     ## ⎛⎧                                                            ⎞
     ## ⎜⎪          ∞                                                 ⎟
@@ -118,7 +100,7 @@ def Simple_Series_For_Natural_Logarithm_Of_2(x):
     ## ⎜⎪          ╱        ⎜ 5k+1    5k+2    5k+3    5k+4    5k+5 ⎟ ⎟
     ## ⎜⎪         ╱         ⎝                                      ⎠ ⎟
     ## ⎜⎪         ‾‾‾‾                                               ⎟
-    ## ⎜⎪        k = 1                                               ⎟
+    ## ⎜⎪        k = 0                                               ⎟
     ## ⎝⎩                                                            ⎠
         
         function = ((-1)**k)*((1/(5*k+1))-(1/(5*k+2))+(1/(5*k+3))-(1/(5*k+4))+(1/(5*k+5)))
@@ -128,18 +110,4 @@ def Simple_Series_For_Natural_Logarithm_Of_2(x):
     y = y[0:17]
     l = float(y)
     return l
-
-print(Simple_Series_For_Natural_Logarithm_Of_2(2))
-
-##
-##def inverse_cosecant_Mercator(x):
-##    x = Symbol("x")
-##    print(pretty(Mercator_Series(x**2)))
-##
-##x = Symbol("x")
-##inverse_cosecant_Mercator(x)
-##
-##a = I**2
-##print(a)
-
     
