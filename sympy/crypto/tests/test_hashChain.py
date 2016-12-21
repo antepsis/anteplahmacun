@@ -8,6 +8,11 @@ def test_getSize():
     table.addChain('test1', 3)
     assert table.getSize() == 2
 
+def test_fetchAtLine():
+    table = ChainedHashTable(32)
+    assert table.fetchAtLine(5) == 0
+    assert table.fetchAtLine('5') == 0
+
 def test_wipeTable():
     table = ChainedHashTable(16)
     table.addChain('test0', 5)
@@ -38,23 +43,60 @@ def test_getKey():
     assert key1 >= 0 and key1 <= 16
 
 def test_addChain():
-    print ('Going to be filled.')
+    table = ChainedHashTable(16)
+
 
 def test_search():
-    print ('Going to be filled.')
+    table = ChainedHashTable(16)
+    table.addChain('test1', 5)
+    table.addChain('', 3)
+
+    searchResults = [table.search('test1'), table.search(''), table.search('notexist')]
+    for i in range(2):
+        assert searchResults[i][0] == True
+        assert searchResults[i][1] != -1
+        assert searchResults[i][2] != -1
+    assert searchResults[2][0] == False
 
 def test_searchHash():
-    print ('Going to be filled.')
+    table = ChainedHashTable(16)
+    testHash = hashlib.md5('test').hexdigest()
+    hashes = []
+    hashes.append(testHash)
+
+    for i in range(4):
+        hashes.append(hashlib.md5(hashes[i]).hexdigest())
+    key = table.getKey(hashes[len(hashes)-1])
+    table.addChain('test', 5)
+    tableData = table.fetchAtLine(key)
+    
+    for j in range(5):
+        assert hashes[j] == tableData[j]
 
 def test_randomize():
-    print ('Going to be filled.')
-
-def test_fetchAtLine():
-    print ('Going to be filled.')
+    table = ChainedHashTable(16)
+    table.addChain('test0', 16)
+    table.addChain('test1', 64)
+    
+    assert table.randomize('test0') != -1
+    assert table.randomize('test1') != -1
+    assert table.randomize('notexist') == -1
+    assert table.randomize('') == -1
 
 def test_controlData():
-    print ('Going to be filled.')
-
+    table = ChainedHashTable(16)
+    table.addChain('test1', 64)
+    hashedValue0 = hashlib.md5('test1').hexdigest()
+    hashedValue1 = hashlib.md5('notexist').hexdigest()
+    hashes = []
+    hashes.append(hashedValue0)
+    table.printTable()
+    for i in range(50):
+        hashes.append(hashes[i])
+    print (hashes[1])
+    assert table.controlData(hashes[29]) == True
+    assert table.controlData(hashes[45]) == True
+    assert table.controlData(hashedValue1) == False
 
 if __name__ == "__main__":
     test_getSize()

@@ -45,6 +45,7 @@ class ChainedHashTable:
     #Returns size used.
     def getSize(self):
         print ('You are using {} size of {} capacity'.format(self.size, self.capacity))
+        return self.size
 
     def printTable(self):
         for i in range(self.capacity):
@@ -105,11 +106,15 @@ class ChainedHashTable:
     
     #Returns item's random hash value from its layers
     def randomize(self, item):
+        if(item == ''):
+            return -1
+
         result = self.search(item)
        
         if(result[0] == True):
             index = result[1]
-            return self.table[index][randint(0, int(result[2]))]
+            if(self.table[index] is list):
+                return self.table[index][randint(0, int(result[2]))]
         else:
             return -1
 
