@@ -28,4 +28,4 @@ from .expressions import (MatrixSlice, BlockDiagMatrix, BlockMatrix,
         MatrixSymbol, Trace, Transpose, ZeroMatrix, blockcut, block_collapse,
         matrix_symbols, Adjoint, hadamard_product, HadamardProduct,
         Determinant, det, DiagonalMatrix, DiagonalOf, trace, DotProduct)
-from .sarrus import(calc_sarrus_det,calc_reverse_matrix)
+from sympy.matrices.sarrus import Sarrus
