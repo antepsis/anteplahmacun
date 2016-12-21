@@ -99,17 +99,17 @@ class ChainedHashTable:
         for i in range(self.capacity):
             if(self.table[i] != 0):
                 for j in range(len(self.table[i])):
-                    if(self.table[i][j] == hashed_value):
+                    if(self.table[i][j] == str(hashed_value)):
                         return [True, i ,j]
 
         return [False, -1]
     
     #Returns item's random hash value from its layers
     def randomize(self, item):
-        if(item == ''):
+        if(str(item) == ''):
             return -1
 
-        result = self.search(item)
+        result = self.search(str(item))
         if(result[0] == True):
             index = result[1]
             hashedLayer = result[2]
